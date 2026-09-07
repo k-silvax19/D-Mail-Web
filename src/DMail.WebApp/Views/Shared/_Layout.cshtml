@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - D-Mail</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" asp-controller="DMails" asp-action="Index">D-MAIL <span>LAB</span></a>
+        <nav><a asp-controller="Configuracao" asp-action="Remetente">Remetente</a> · <a asp-controller="DMails" asp-action="Criar">Novo D-Mail</a></nav>
+    </header>
+    <main class="container">@RenderBody()</main>
+</body>
+</html>

@@ -1,0 +1,28 @@
+@model CriarDMailViewModel
+@{
+    ViewData["Title"] = "Agendar D-Mail";
+}
+
+<section class="form-card">
+    <p class="eyebrow">NOVA TRANSMISSÃO</p>
+    <h1>Agendar D-Mail</h1>
+    <p>Esta primeira versão registra o agendamento. O serviço de envio SMTP será conectado em uma próxima etapa.</p>
+    <form asp-action="Criar" method="post">
+        <div asp-validation-summary="ModelOnly" class="validation"></div>
+        <label asp-for="Destinatario"></label>
+        <input asp-for="Destinatario" placeholder="pessoa@exemplo.com" />
+        <span asp-validation-for="Destinatario" class="validation"></span>
+        <label asp-for="Assunto"></label>
+        <input asp-for="Assunto" placeholder="Assunto da transmissão" />
+        <span asp-validation-for="Assunto" class="validation"></span>
+        <label asp-for="Mensagem"></label>
+        <textarea asp-for="Mensagem" rows="7" placeholder="Escreva a mensagem..."></textarea>
+        <span asp-validation-for="Mensagem" class="validation"></span>
+        <label asp-for="DataAgendada"></label>
+        <input asp-for="DataAgendada" type="datetime-local" value="@Model.DataAgendada.ToString("yyyy-MM-ddTHH:mm")" />
+        <span asp-validation-for="DataAgendada" class="validation"></span>
+        <label asp-for="Recorrencia"></label>
+        <select asp-for="Recorrencia" asp-items="Html.GetEnumSelectList<RecorrenciaDoDMail>()"></select>
+        <div class="actions"><a asp-action="Index">Voltar</a><button class="button" type="submit">Programar envio</button></div>
+    </form>
+</section>

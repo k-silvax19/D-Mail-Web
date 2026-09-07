@@ -1,0 +1,9 @@
+bin/
+obj/
+.vs/
+*.user
+appsettings.Development.json
+*.db
+*.db-shm
+*.db-wal
+src/DMail.WebApp/App_Data/

@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DMail.Dominio/DMail.Dominio.csproj" />
+    <Project Path="src/DMail.Aplicacao/DMail.Aplicacao.csproj" />
+    <Project Path="src/DMail.Infra/DMail.Infra.csproj" />
+    <Project Path="src/DMail.WebApp/DMail.WebApp.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DMail.Testes.Unidade/DMail.Testes.Unidade.csproj" />
+  </Folder>
+</Solution>

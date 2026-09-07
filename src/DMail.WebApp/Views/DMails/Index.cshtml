@@ -1,0 +1,54 @@
+@model IReadOnlyList<DMailResumoDto>
+@{
+    ViewData["Title"] = "Central de D-Mails";
+}
+
+<section class="hero">
+    <p class="eyebrow">LABORATÓRIO DE COMUNICAÇÃO TEMPORAL</p>
+    <h1>Envie uma mensagem para o futuro.</h1>
+    <p>Planeje D-Mails, acompanhe o estado de cada transmissão e mantenha sua linha do tempo organizada.</p>
+    <a class="button" asp-action="Criar">Agendar D-Mail</a>
+</section>
+
+@if (TempData["Sucesso"] is string sucesso)
+{
+    <p class="alert success">@sucesso</p>
+}
+@if (TempData["Erro"] is string erro)
+{
+    <p class="alert error">@erro</p>
+}
+
+<section class="panel">
+    <div class="section-heading"><h2>Transmissões</h2><span>@Model.Count registro(s)</span></div>
+    @if (!Model.Any())
+    {
+        <p class="empty">Nenhum D-Mail foi programado. Crie a primeira transmissão.</p>
+    }
+    else
+    {
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Destino</th><th>Assunto</th><th>Próximo envio</th><th>Recorrência</th><th>Status</th><th></th></tr></thead>
+                <tbody>
+                @foreach (var dmail in Model)
+                {
+                    <tr>
+                        <td>@dmail.Destinatario</td>
+                        <td>@dmail.Assunto</td>
+                        <td>@dmail.DataAgendadaUtc.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@(dmail.Recorrencia == RecorrenciaDoDMail.Diaria ? "Diária" : "Única")</td>
+                        <td><span class="status @dmail.Status.ToString().ToLowerInvariant()">@dmail.Status</span></td>
+                        <td>
+                        @if (dmail.Status == StatusDoDMail.Agendado)
+                        {
+                            <form asp-action="Cancelar" asp-route-id="@dmail.Id" method="post"><button class="link-button" type="submit">Cancelar</button></form>
+                        }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</section>

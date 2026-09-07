@@ -1,0 +1,24 @@
+@model DMail.Aplicacao.Modulos.ModuloConfiguracao.ConfigurarRemetenteViewModel
+@{
+    ViewData["Title"] = "Configurar remetente";
+}
+
+<section class="form-card">
+    <p class="eyebrow">CONEXÃO SMTP</p>
+    <h1>Configurar remetente</h1>
+    <p>Para Gmail, crie uma senha de aplicativo com a verificação em duas etapas ativada. A senha é criptografada antes de ser gravada no banco.</p>
+    <form asp-action="Remetente" method="post">
+        <div asp-validation-summary="ModelOnly" class="validation"></div>
+        <label asp-for="Remetente"></label>
+        <input asp-for="Remetente" placeholder="voce@gmail.com" />
+        <span asp-validation-for="Remetente" class="validation"></span>
+        <label asp-for="SenhaDeAplicativo"></label>
+        <input asp-for="SenhaDeAplicativo" autocomplete="new-password" />
+        <span asp-validation-for="SenhaDeAplicativo" class="validation"></span>
+        <label asp-for="ServidorSmtp"></label>
+        <input asp-for="ServidorSmtp" />
+        <label asp-for="PortaSmtp"></label>
+        <input asp-for="PortaSmtp" type="number" />
+        <div class="actions"><a asp-controller="DMails" asp-action="Index">Voltar</a><button class="button" type="submit">Salvar configuração</button></div>
+    </form>
+</section>
