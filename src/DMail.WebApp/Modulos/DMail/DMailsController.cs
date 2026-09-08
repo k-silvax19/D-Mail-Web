@@ -5,21 +5,24 @@ namespace DMail.WebApp.Controllers;
 
 public class DMailsController(ServicoDMail servico) : Controller
 {
+    private const string CaminhoIndex = "~/Compartilhado/Views/Index.cshtml";
+    private const string CaminhoCriar = "~/Modulos/DMail/Views/Criar.cshtml";
+
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
         var dMails = await servico.ObterTodosAsync(cancellationToken);
-        return View(dMails);
+        return View(CaminhoIndex, dMails);
     }
 
     [HttpGet]
-    public IActionResult Criar() => View(new CriarDMailViewModel());
+    public IActionResult Criar() => View(CaminhoCriar, new CriarDMailViewModel());
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Criar(CriarDMailViewModel modelo, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
-            return View(modelo);
+            return View(CaminhoCriar, modelo);
 
         try
         {
@@ -30,7 +33,7 @@ public class DMailsController(ServicoDMail servico) : Controller
         catch (ArgumentException exception)
         {
             ModelState.AddModelError(string.Empty, exception.Message);
-            return View(modelo);
+            return View(CaminhoCriar, modelo);
         }
     }
 

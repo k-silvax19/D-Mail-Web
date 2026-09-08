@@ -5,11 +5,13 @@ namespace DMail.WebApp.Controllers;
 
 public class ConfiguracaoController(ServicoConfiguracaoDeEmail servico) : Controller
 {
+    private const string CaminhoRemetente = "~/Modulos/Configuracao/Views/Remetente.cshtml";
+
     [HttpGet]
     public async Task<IActionResult> Remetente(CancellationToken cancellationToken)
     {
         var configuracao = await servico.ObterAsync(cancellationToken);
-        return View(new ConfigurarRemetenteViewModel
+        return View(CaminhoRemetente, new ConfigurarRemetenteViewModel
         {
             Remetente = configuracao?.Remetente ?? string.Empty,
             ServidorSmtp = configuracao?.ServidorSmtp ?? "smtp.gmail.com",
@@ -22,7 +24,7 @@ public class ConfiguracaoController(ServicoConfiguracaoDeEmail servico) : Contro
     public async Task<IActionResult> Remetente(ConfigurarRemetenteViewModel modelo, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
-            return View(modelo);
+            return View(CaminhoRemetente, modelo);
 
         try
         {
@@ -33,7 +35,7 @@ public class ConfiguracaoController(ServicoConfiguracaoDeEmail servico) : Contro
         catch (ArgumentException exception)
         {
             ModelState.AddModelError(string.Empty, exception.Message);
-            return View(modelo);
+            return View(CaminhoRemetente, modelo);
         }
     }
 }
