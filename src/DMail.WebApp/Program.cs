@@ -1,5 +1,5 @@
 using DMail.Aplicacao.Modulos.ModuloConfiguracao;
-using DMail.Aplicacao.Modulos.ModuloDMail;
+
 using DMail.Dominio.Modulos.ModuloConfiguracao;
 using DMail.Dominio.Modulos.ModuloDMail;
 using DMail.Infra.Compartilhado.Orm;
@@ -8,8 +8,11 @@ using DMail.Infra.Modulos.ModuloDMail;
 using Microsoft.EntityFrameworkCore;
 using DMail.WebApp.Servicos;
 using Microsoft.AspNetCore.DataProtection;
+using DMail.Aplicacao;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddApplicationServices(builder.Configuration);
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
@@ -18,9 +21,6 @@ builder.Services.AddDbContext<DMailDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DMailConnection")));
 builder.Services.AddScoped<IRepositorioDMailAgendado, RepositorioDMailEmOrm>();
 builder.Services.AddScoped<IRepositorioConfiguracaoDeEmail, RepositorioConfiguracaoDeEmailEmOrm>();
-builder.Services.AddScoped<ServicoDMail>();
-builder.Services.AddScoped<ServicoConfiguracaoDeEmail>();
-builder.Services.AddScoped<ServicoDeEntregaDeDMail>();
 builder.Services.AddScoped<IClienteDeEmail, ClienteSmtpDeEmail>();
 var diretorioDeChaves = Path.Combine(builder.Environment.ContentRootPath, "App_Data", "keys");
 Directory.CreateDirectory(diretorioDeChaves);
