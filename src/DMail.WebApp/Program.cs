@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddInfraRepositories(builder.Configuration);
 
+//Conexão com banco de dados (sqllite)
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Services.AddControllersWithViews();
@@ -25,26 +26,14 @@ var dataProtection = builder.Services.AddDataProtection()
     .SetApplicationName("DMail")
     .PersistKeysToFileSystem(new DirectoryInfo(diretorioDeChaves));
 if (OperatingSystem.IsWindows())
+{
     dataProtection.ProtectKeysWithDpapi();
+}
 
 builder.Services.AddSingleton<IProtecaoDeSegredo, ProtecaoDeSegredoComDataProtection>();
 builder.Services.AddHostedService<AgendadorDeDMailBackgroundService>();
 
 var app = builder.Build();
-
-// if (!app.Environment.IsDevelopment())
-// {
-//     app.UseExceptionHandler(new Microsoft.AspNetCore.Diagnostics.ExceptionHandlerOptions
-//     {
-//         ExceptionHandlingPath = "/Home/Error",
-//         AllowStatusCode404Response = true
-//     });
-//     app.UseHsts();
-// }
-// else
-// {
-//     app.UseDeveloperExceptionPage();
-// }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
